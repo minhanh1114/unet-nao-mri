@@ -264,9 +264,7 @@ model = unet(input_size=(im_height, im_width, 3))
 
 opt = tf.keras.optimizers.Adam(learning_rate)
 model.compile(optimizer=opt, loss=dice_coef_loss, metrics=["binary_accuracy", iou, dice_coef])
-
-callbacks = [ModelCheckpoint('unet_brain_mri_seg.hdf5', verbose=1, save_best_only=True, mode='max')]
-
+callbacks = [ModelCheckpoint('unet_brain_mri_seg_coppy.hdf5', monitor='val_iou', verbose=1, save_best_only=True, mode='max')]
 history = model.fit(train_gen,
                     steps_per_epoch=len(df_train) / BATCH_SIZE,
                     epochs=EPOCHS,
